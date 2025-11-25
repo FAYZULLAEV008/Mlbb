@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Legends: Bang Bang - MOBA Battle Arena</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #f9a825;
+            --secondary: #1a237e;
+            --accent: #ff5722;
+            --text: #ffffff;
+            --dark: #0a0e2a;
+            --light-dark: #151a3f;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--text);
+            overflow-x: hidden;
+            background-image: linear-gradient(to bottom, var(--dark), var(--light-dark));
+        }
+
+        header {
+            background: linear-gradient(rgba(10, 14, 42, 0.9), rgba(10, 14, 42, 0.8)), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 5rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-shadow: 0 0 15px rgba(249, 168, 37, 0.7);
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            max-width: 800px;
+            line-height: 1.6;
+        }
+        .btn {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white;
+            padding: 14px 35px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            margin: 10px;
+            box-shadow: 0 5px 15px rgba(249, 168, 37, 0.4);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(249, 168, 37, 0.6);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(10, 14, 42, 0.95);
+            padding: 15px 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(249, 168, 37, 0.2);
+        }
+
+        nav.scrolled {
+            background-color: rgba(10, 14, 42, 0.98);
+            padding: 10px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .nav-logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+            position: relative;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            padding: 5px 0;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        section {
+            padding: 100px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            margin-top: 10px;
+        }
+
+        h2 {
+            font-size: 2.8rem;
+            margin-bottom: 50px;
+            text-align: center;
+            color: var(--primary);
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            margin-top: 40px;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+            line-height: 1.7;
+            font-size: 1.1rem;
+        }
+
+        .about-image {
+            flex: 1;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            border: 3px solid var(--primary);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .about-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .features {
+            background-color: var(--light-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .features::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-card {
+            background: linear-gradient(145deg, rgba(26, 35, 126, 0.7), rgba(10, 14, 42, 0.9));
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(249, 168, 37, 0.3);
+            backdrop-filter: blur(5px);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.5);
+            border-color: var(--primary);
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+        }
+
+        .heroes {
+            background-color: var(--dark);
+        }
+
+        .heroes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .hero-card {
+            background-color: var(--light-dark);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .hero-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4);
+            border-color: var(--primary);
+        }
+
+        .hero-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .hero-card:hover .hero-image img {
+            transform: scale(1.1);
+        }
+
+        .hero-info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .hero-role {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: var(--text);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .hero-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .game-modes {
+            background-color: var(--light-dark);
+        }
+
+        .modes-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .mode-card {
+            background: linear-gradient(145deg, rgba(26, 35, 126, 0.8), rgba(10, 14, 42, 0.9));
+            border-radius: 15px;
+            padding: 30px;
+            width: 350px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .mode-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+        }
+
+        .mode-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .mode-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .download {
+            text-align: center;
+            background: linear-gradient(rgba(10, 14, 42, 0.9), rgba(10, 14, 42, 0.9)), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .platforms {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .platform {
+            background: linear-gradient(145deg, rgba(26, 35, 126, 0.8), rgba(10, 14, 42, 0.9));
+            border-radius: 15px;
+            padding: 30px;
+            width: 250px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .platform:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+        }
+
+        .platform i {
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .platform h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        footer {
+            background-color: var(--light-dark);
+            padding: 50px 20px 30px;
+            text-align: center;
+            border-top: 2px solid rgba(249, 168, 37, 0.3);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+
+        .footer-links a {
+            color: var(--text);
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+        }
+
+        .social-links a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(249, 168, 37, 0.5);
+        }
+
+        .copyright {
+            margin-top: 30px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: linear-gradient(145deg, var(--light-dark), var(--dark));
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            border: 3px solid var(--primary);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            color: var(--primary);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: var(--accent);
+        }
+
+        .modal-hero-image {
+            width: 100%;
+            height: 250px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .modal-hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modal-hero-info h3 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .modal-hero-info .hero-role {
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat i {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .hero-abilities {
+            margin-top: 20px;
+        }
+
+        .ability {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .ability-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--secondary);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        /* Newsletter */
+        .newsletter {
+            background-color: var(--secondary);
+            padding: 50px 20px;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .newsletter h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .newsletter-form {
+            display: flex;
+            justify-content: center;
+            max-width: 500px;
+            margin: 0 auto;
+            margin-top: 25px;   
+        }
+
+        .newsletter-form input {
+            padding: 12px 15px;
+            border: none;
+            border-radius: 30px 0 0 30px;
+            width: 70%;
+            font-size: 1rem;
+        }
+
+        .newsletter-form button {
+            padding: 12px 25px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white;
+            border: none;
+            border-radius: 0 30px 30px 0;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-form button:hover {
+            background: linear-gradient(45deg, var(--accent), var(--primary));
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--dark);
+                flex-direction: column;
+                padding: 20px;
+                text-align: center;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 15px 0;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .about-content {
+                flex-direction: column;
+            }
+
+            .logo {
+                font-size: 3rem;
+            }
+
+            h2 {
+                font-size: 2.2rem;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .newsletter-form input {
+                width: 100%;
+                border-radius: 30px;
+                margin-bottom: 10px;
+            }
+
+            .newsletter-form button {
+                width: 100%;
+                border-radius: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-crown"></i>
+                MLBB
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#heroes">Heroes</a></li>
+                <li><a href="#modes">Game Modes</a></li>
+                <li><a href="#download">Download</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <header id="home">
+        <div class="logo">MOBILE LEGENDS</div>
+        <p class="tagline">The world's most popular MOBA game. Battle with friends, develop strategies, and become the best team. With over 100 heroes, every match is a new experience!</p>
+        <div>
+            <a href="#download" class="btn">DOWNLOAD NOW</a>
+            <a href="#about" class="btn btn-outline">LEARN MORE</a>
+        </div>
+    </header>
+
+    <section id="about">
+        <div class="container">
+            <h2>About The Game</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Mobile Legends: Bang Bang is a MOBA (Multiplayer Online Battle Arena) game developed by Moonton for mobile devices. The game was released in 2016 and quickly gained millions of players worldwide.</p>
+                    <p>The goal of the game is for two teams of five players each to battle and destroy the opponent's base and main structure (Nexus). Each player chooses a hero with unique abilities and fights with their team to achieve victory on the battlefield.</p>
+                    <p>Matches typically last 10-15 minutes, making it ideal for those who want a quick gaming experience. With various heroes, strategies, and team play styles, Mobile Legends always provides a fresh and exciting gaming experience.</p>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1633617477271-d4f351ff7c7c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Mobile Legends gameplay">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <div class="container">
+            <h2>Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>5v5 Real Battle</h3>
+                    <p>Experience classic MOBA gameplay with real 5v5 battles on your mobile device. Matches last less than 10 minutes.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <h3>Team Play</h3>
+                    <p>Play together with friends and develop strategies to win. Communicate through voice chat.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-fist-raised"></i>
+                    </div>
+                    <h3>100+ Heroes</h3>
+                    <p>Choose from over 100 heroes with different abilities. New heroes are regularly added.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chess-board"></i>
+                    </div>
+                    <h3>Fair Play</h3>
+                    <p>All players start on equal terms. Victory depends only on your skill and your team's cooperation.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3>Ranking System</h3>
+                    <p>Test your skills through the ranking system and climb to the highest levels. Each season brings new rewards.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3>Multilingual</h3>
+                    <p>The game is available in more than 10 languages. Connect with players from all over the world.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="heroes" class="heroes">
+        <div class="container">
+            <h2>Popular Heroes</h2>
+            <div class="heroes-grid">
+                <div class="hero-card" data-hero="alucard">
+                    <div class="hero-image">
+                        <img src="./Alucard.jpg" alt="Alucard">
+                    </div>
+                    <div class="hero-info">
+                        <span class="hero-role">Fighter</span>
+                        <h3>Alucard</h3>
+                        <p>Strong attacker hero who fights more powerfully with low HP.</p>
+                    </div>
+                </div>
+                <div class="hero-card" data-hero="miya">
+                    <div class="hero-image">
+                        <img src="./MIya.jpg" alt="Miya">
+                    </div>
+                    <div class="hero-info">
+                        <span class="hero-role">Marksman</span>
+                        <h3>Miya</h3>
+                        <p>Main marksman specialized in long-range attacks.</p>
+                    </div>
+                </div>
+                <div class="hero-card" data-hero="eudora">
+                    <div class="hero-image">
+                        <img src="./eydora.webp" alt="Eudora">
+                    </div>
+                    <div class="hero-info">
+                        <span class="hero-role">Mage</span>
+                        <h3>Eudora</h3>
+                        <p>Capable of eliminating enemies with powerful magical attacks.</p>
+                    </div>
+                </div>
+                <div class="hero-card" data-hero="tigreal">
+                    <div class="hero-image">
+                        <img src="./Tegril.webp" alt="Tigreal">
+                    </div>
+                    <div class="hero-info">
+                        <span class="hero-role">Tank</span>
+                        <h3>Tigreal</h3>
+                        <p>Sturdy tank specialized in protecting the team.</p>
+                    </div>
+                </div>
+                <div class="hero-card" data-hero="gusion">
+                    <div class="hero-image">
+                        <img src="./GUssion.webp" alt="Gusion">
+                    </div>
+                    <div class="hero-info">
+                        <span class="hero-role">Assassin</span>
+                        <h3>Gusion</h3>
+                        <p>High mobility assassin with burst damage capabilities.</p>
+                    </div>
+                </div>
+                <div class="hero-card" data-hero="lunox">
+                    <div class="hero-image">
+                        <img src="./lunox.jpg" alt="Lunox">
+                    </div>
+                    <div class="hero-info">
+                        <span class="hero-role">Mage</span>
+                        <h3>Lunox</h3>
+                        <p>Powerful mage who can switch between light and dark forms.</p>
+                    </div>
+                </div>
+                <div class="hero-card" data-hero="claude">
+                    <div class="hero-image">
+                        <img src="./Klaud.jpg" alt="Claude">
+                    </div>
+                    <div class="hero-info">
+                        <span class="hero-role">Marksman</span>
+                        <h3>Claude</h3>
+                        <p>Marksman with a monkey companion for additional attacks.</p>
+                    </div>
+                </div>
+                <div class="hero-card" data-hero="khufra">
+                    <div class="hero-image">
+                        <img src="./Hufra.jpg" alt="Khufra">
+                    </div>
+                    <div class="hero-info">
+                        <span class="hero-role">Tank</span>
+                        <h3>Khufra</h3>
+                        <p>Tank hero with excellent crowd control abilities.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="modes" class="game-modes">
+        <div class="container">
+            <h2>Game Modes</h2>
+            <div class="modes-container">
+                <div class="mode-card">
+                    <div class="mode-icon">
+                        <i class="fas fa-crosshairs"></i>
+                    </div>
+                    <h3>Classic Mode</h3>
+                    <p>Standard 5v5 battlefield. Objective is to destroy the main structure in the enemy base.</p>
+                </div>
+                <div class="mode-card">
+                    <div class="mode-icon">
+                        <i class="fas fa-chess-rook"></i>
+                    </div>
+                    <h3>Ranked Mode</h3>
+                    <p>Battle to earn ranking points and climb to higher leagues.</p>
+                </div>
+                <div class="mode-card">
+                    <div class="mode-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Brawl Mode</h3>
+                    <p>Shortened map and faster gaming experience. Matches last less than 10 minutes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="download" class="download">
+        <div class="container">
+            <h2>Download</h2>
+            <p>Download Mobile Legends: Bang Bang on one of the platforms below and achieve victory on the battlefield!</p>
+            
+            <div class="platforms">
+                <div class="platform">
+                    <i class="fab fa-google-play"></i>
+                    <h3>Android</h3>
+                    <p>Google Play Store</p>
+                    <a href="#" class="btn">Download</a>
+                </div>
+                <div class="platform">
+                    <i class="fab fa-apple"></i>
+                    <h3>iOS</h3>
+                    <p>App Store</p>
+                    <a href="#" class="btn">Download</a>
+                </div>
+                <div class="platform">
+                    <i class="fas fa-desktop"></i>
+                    <h3>PC</h3>
+                    <p>Via Emulator</p>
+                    <a href="#" class="btn">Download</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="newsletter">
+        <div class="container">
+            <h3>Subscribe to Our Newsletter</h3>
+            <p>Get the latest updates, news, and events about Mobile Legends</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Enter your email" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <i class="fas fa-crown"></i> MOBILE LEGENDS
+            </div>
+            <p>Developed by Moonton. All rights reserved.</p>
+            
+            <div class="footer-links">
+                <a href="#">Terms of Use</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Help Center</a>
+                <a href="#">Contact Us</a>
+            </div>
+            
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-discord"></i></a>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2023 Mobile Legends: Bang Bang. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Hero Modal -->
+    <div class="modal" id="heroModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-hero-image">
+                <img id="modalHeroImg" src="" alt="Hero Image">
+            </div>
+            <div class="modal-hero-info">
+                <h3 id="modalHeroName"></h3>
+                <span class="hero-role" id="modalHeroRole"></span>
+                <p id="modalHeroDesc"></p>
+                
+                <div class="hero-stats">
+                    <div class="stat">
+                        <i class="fas fa-heart"></i>
+                        <p>Durability</p>
+                        <p id="modalHeroDurability"></p>
+                    </div>
+                    <div class="stat">
+                        <i class="fas fa-bolt"></i>
+                        <p>Offense</p>
+                        <p id="modalHeroOffense"></p>
+                    </div>
+                    <div class="stat">
+                        <i class="fas fa-shield-alt"></i>
+                        <p>Defense</p>
+                        <p id="modalHeroDefense"></p>
+                    </div>
+                    <div class="stat">
+                        <i class="fas fa-running"></i>
+                        <p>Difficulty</p>
+                        <p id="modalHeroDifficulty"></p>
+                    </div>
+                </div>
+                
+                <div class="hero-abilities">
+                    <h4>Abilities</h4>
+                    <div id="modalHeroAbilities"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        }); 
+
+        // Hamburger menu
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu
+                    if (navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                    }
+                }
+            });
+        });
+
+        // Hero data
+        const heroesData = {
+            alucard: {
+                name: "Alucard",
+                role: "Fighter",
+                description: "A powerful fighter who becomes stronger when his HP is low. Alucard is known for his lifesteal abilities and high damage output.",
+                durability: "7/10",
+                offense: "9/10",
+                defense: "5/10",
+                difficulty: "6/10",
+                abilities: [
+                    { name: "Pursuit", icon: "fas fa-running", description: "Charges toward an enemy and deals physical damage." },
+                    { name: "Whirling Smash", icon: "fas fa-sync", description: "Spins and deals damage to nearby enemies." },
+                    { name: "Fission Wave", icon: "fas fa-wave-square", description: "Releases a wave that deals damage and slows enemies." },
+                    { name: "Spectral Service", icon: "fas fa-ghost", description: "Ultimate ability that enhances basic attacks and provides lifesteal." }
+                ]
+            },
+            miya: {
+                name: "Miya",
+                role: "Marksman",
+                description: "A skilled archer with exceptional range and attack speed. Miya excels at dealing sustained damage from a distance.",
+                durability: "4/10",
+                offense: "8/10",
+                defense: "3/10",
+                difficulty: "3/10",
+                abilities: [
+                    { name: "Arrow of Eclipse", icon: "fas fa-bullseye", description: "Fires a powerful arrow that deals physical damage." },
+                    { name: "Turbo Stealth", icon: "fas fa-user-secret", description: "Becomes invisible and increases movement speed." },
+                    { name: "Rain of Arrows", icon: "fas fa-cloud-rain", description: "Shoots multiple arrows in a designated area." },
+                    { name: "Fission Shot", icon: "fas fa-arrows-alt-h", description: "Ultimate that splits basic attacks into multiple arrows." }
+                ]
+            },
+            eudora: {
+                name: "Eudora",
+                role: "Mage",
+                description: "A powerful mage who controls the elements to devastate her enemies with magical attacks from a distance.",
+                durability: "3/10",
+                offense: "9/10",
+                defense: "4/10",
+                difficulty: "5/10",
+                abilities: [
+                    { name: "Forked Lightning", icon: "fas fa-bolt", description: "Releases lightning that jumps between enemies." },
+                    { name: "Electric Arrow", icon: "fas fa-arrow-right", description: "Fires an electric arrow that stuns the target." },
+                    { name: "Superconductor", icon: "fas fa-atom", description: "Creates an electric field that damages enemies over time." },
+                    { name: "Thunder Strike", icon: "fas fa-cloud-bolt", description: "Ultimate that calls down a powerful thunder strike." }
+                ]
+            },
+            tigreal: {
+                name: "Tigreal",
+                role: "Tank",
+                description: "A stalwart guardian who protects his allies with powerful defensive abilities and crowd control.",
+                durability: "9/10",
+                offense: "4/10",
+                defense: "9/10",
+                difficulty: "5/10",
+                abilities: [
+                    { name: "Attack Wave", icon: "fas fa-wave-square", description: "Sends out a shockwave that damages and slows enemies." },
+                    { name: "Sacred Hammer", icon: "fas fa-hammer", description: "Slams the ground, damaging and knocking up enemies." },
+                    { name: "Implosion", icon: "fas fa-compress-arrows-alt", description: "Pulls enemies toward him and stuns them." },
+                    { name: "Fearless", icon: "fas fa-shield-alt", description: "Ultimate that provides damage reduction to nearby allies." }
+                ]
+            },
+            gusion: {
+                name: "Gusion",
+                role: "Assassin",
+                description: "A highly mobile assassin with burst damage capabilities. Gusion excels at eliminating key targets quickly.",
+                durability: "4/10",
+                offense: "9/10",
+                defense: "3/10",
+                difficulty: "8/10",
+                abilities: [
+                    { name: "Sword Spike", icon: "fas fa-bullseye", description: "Throws daggers that deal damage and mark enemies." },
+                    { name: "Shadowblade Slaughter", icon: "fas fa-user-ninja", description: "Teleports to marked enemies and deals damage." },
+                    { name: "Incandescence", icon: "fas fa-sun", description: "Unleashes a flurry of attacks in a designated area." },
+                    { name: "Deathly Fan", icon: "fas fa-fan", description: "Ultimate that resets cooldowns and enhances abilities." }
+                ]
+            },
+            lunox: {
+                name: "Lunox",
+                role: "Mage",
+                description: "A powerful mage who can switch between light and dark forms, each with unique abilities and playstyles.",
+                durability: "4/10",
+                offense: "9/10",
+                defense: "3/10",
+                difficulty: "7/10",
+                abilities: [
+                    { name: "Starlight Pulse", icon: "fas fa-star", description: "Fires a pulse of light that deals magic damage." },
+                    { name: "Chaos Assault", icon: "fas fa-moon", description: "Unleashes dark energy that damages enemies." },
+                    { name: "Cosmic Fission", icon: "fas fa-atom", description: "Switches between light and dark forms." },
+                    { name: "Dreamland Twist", icon: "fas fa-cloud", description: "Ultimate that provides immunity and enhances abilities." }
+                ]
+            },
+            claude: {
+                name: "Claude",
+                role: "Marksman",
+                description: "A marksman who fights alongside his monkey companion, Dexter. Claude excels at dealing sustained damage from a distance.",
+                durability: "3/10",
+                offense: "8/10",
+                defense: "2/10",
+                difficulty: "6/10",
+                abilities: [
+                    { name: "Art of Thievery", icon: "fas fa-hand-holding-usd", description: "Steals movement speed and attack speed from enemies." },
+                    { name: "Battle Mirror Image", icon: "fas fa-user-friends", description: "Creates a clone that mimics basic attacks." },
+                    { name: "Blazing Duet", icon: "fas fa-fire", description: "Commands Dexter to attack enemies in a cone." },
+                    { name: "Master of Puppets", icon: "fas fa-mask", description: "Ultimate that makes Claude and Dexter attack all nearby enemies." }
+                ]
+            },
+            khufra: {
+                name: "Khufra",
+                role: "Tank",
+                description: "A tank hero with excellent crowd control abilities. Khufra excels at disrupting enemy formations and protecting allies.",
+                durability: "9/10",
+                offense: "5/10",
+                defense: "8/10",
+                difficulty: "6/10",
+                abilities: [
+                    { name: "Tyrant's Revenge", icon: "fas fa-fist-raised", description: "Leaps to a location and knocks up enemies." },
+                    { name: "Bouncing Ball", icon: "fas fa-basketball-ball", description: "Turns into a ball that bounces and stuns enemies." },
+                    { name: "Spell Curse", icon: "fas fa-skull-crossbones", description: "Creates a curse that slows and damages enemies." },
+                    { name: "Tyrant's Rage", icon: "fas fa-angry", description: "Ultimate that pulls enemies toward him and stuns them." }
+                ]
+            }
+        };
+
+        // Hero modal functionality
+        const heroCards = document.querySelectorAll('.hero-card');
+        const heroModal = document.getElementById('heroModal');
+        const closeModal = document.querySelector('.close-modal');
+
+        heroCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const heroId = this.getAttribute('data-hero');
+                const heroData = heroesData[heroId];
+                
+                if (heroData) {
+                    document.getElementById('modalHeroImg').src = this.querySelector('img').src;
+                    document.getElementById('modalHeroName').textContent = heroData.name;
+                    document.getElementById('modalHeroRole').textContent = heroData.role;
+                    document.getElementById('modalHeroDesc').textContent = heroData.description;
+                    document.getElementById('modalHeroDurability').textContent = heroData.durability;
+                    document.getElementById('modalHeroOffense').textContent = heroData.offense;
+                    document.getElementById('modalHeroDefense').textContent = heroData.defense;
+                    document.getElementById('modalHeroDifficulty').textContent = heroData.difficulty;
+                    
+                    const abilitiesContainer = document.getElementById('modalHeroAbilities');
+                    abilitiesContainer.innerHTML = '';
+                    
+                    heroData.abilities.forEach(ability => {
+                        const abilityElement = document.createElement('div');
+                        abilityElement.className = 'ability';
+                        abilityElement.innerHTML = `
+                            <div class="ability-icon">
+                                <i class="${ability.icon}"></i>
+                            </div>
+                            <div>
+                                <h5>${ability.name}</h5>
+                                <p>${ability.description}</p>
+                            </div>
+                        `;
+                        abilitiesContainer.appendChild(abilityElement);
+                    });
+                    
+                    heroModal.style.display = 'flex';
+                }
+            });
+        });
+
+        closeModal.addEventListener('click', function() {
+            heroModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', function(event) {
+            if (event.target === heroModal) {
+                heroModal.style.display = 'none';
+            }
+        });
+
+        // Newsletter form submission
+        const newsletterForm = document.querySelector('.newsletter-form');
+        newsletterForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input').value;
+            alert(`Thank you for subscribing with ${email}! You'll receive updates about Mobile Legends soon.`);
+            this.reset();
+        });
+
+        // Download buttons functionality
+        const downloadButtons = document.querySelectorAll('.platform .btn');
+        downloadButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const platform = this.closest('.platform').querySelector('h3').textContent;
+                alert(`Redirecting to ${platform} download page...`);
+            });
+        });
+    </script>
+</body>
+</html>
